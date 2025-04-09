@@ -2,13 +2,30 @@
 package reproductor;
 
 public class Lista {
-    Cancion PTR;
-    Cancion FINAL;
+    private Cancion PTR;
+    private Cancion FINAL;
 
     public Lista() {
         this.PTR = null;
         this.FINAL = null;
     }
+
+    public Cancion getPTR() {
+        return PTR;
+    }
+
+    public void setPTR(Cancion PTR) {
+        this.PTR = PTR;
+    }
+
+    public Cancion getFINAL() {
+        return FINAL;
+    }
+
+    public void setFINAL(Cancion FINAL) {
+        this.FINAL = FINAL;
+    }
+    
     
     public void agregarCancion(String nombre, String direccion){
         Cancion nueva = new Cancion(nombre, direccion);
@@ -16,34 +33,27 @@ public class Lista {
             PTR = nueva;
             FINAL = nueva;
         }else {
-            FINAL.siguiente = nueva;
-            nueva.anterior = FINAL;
+            FINAL.setSiguiente(nueva);
+            nueva.setAnterior(nueva);
         }
         FINAL = nueva;
-        FINAL.siguiente = PTR;
-        PTR.anterior = FINAL;
+        FINAL.setSiguiente(nueva);
+        PTR.setAnterior(nueva);
     }
     
     public void pasarSiguienteCancion(){
         Cancion actual = PTR;
         if (actual != null){
-            actual = actual.siguiente;
+            actual = actual.getSiguiente();
         }
     }
     
     public void pasarAnteriorCancion(){
         Cancion actual = PTR;
         if (actual != null){
-            actual = actual.anterior;
+            actual = actual.getAnterior();
         }
     }
     
-    public void ElimiarCancion(Cancion otra){
-        if (PTR == null) {
-            System.out.println("No hay cancion para eliminar");
-        }else{
-        
-        }
     
-    }
 }

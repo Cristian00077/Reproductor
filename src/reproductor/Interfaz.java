@@ -1,28 +1,29 @@
 
 package reproductor;
 
-
+import java.io.File;
 import java.io.IOException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 
 public class Interfaz extends javax.swing.JFrame {
 
+    Clip clip;
     public Interfaz() {
         initComponents();
-        btnPausar.setIcon(new ImageIcon("C:/Users/CRISTIAN VILORIA/OneDrive/Documents/ReproductorMusical/src/iconos/audio-1584901280.webp"));
-        btnPausar.setText(null);
-        setLocationRelativeTo(null);
+        btnPausar.setIcon(new ImageIcon("C:\\Users\\CRISTIAN VILORIA\\OneDrive\\Documents\\ReproductorMusical\\src\\iconos\\IMAGEN.jpeg"));
+      
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        label = new javax.swing.JLabel();
         btnAnterior = new javax.swing.JButton();
         btnPausar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
@@ -34,9 +35,9 @@ public class Interfaz extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 102, 255));
-        jLabel1.setText("Reproductor Musical");
+        label.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        label.setForeground(new java.awt.Color(102, 102, 255));
+        label.setText("Reproductor Musical");
 
         btnAnterior.setText("Anterior");
         btnAnterior.addActionListener(new java.awt.event.ActionListener() {
@@ -64,6 +65,11 @@ public class Interfaz extends javax.swing.JFrame {
         btnEliminar.setText("Eliminar cancion");
 
         btnPlay.setText("Play");
+        btnPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlayActionPerformed(evt);
+            }
+        });
 
         cbxCanciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -98,13 +104,13 @@ public class Interfaz extends javax.swing.JFrame {
                         .addComponent(cbxCanciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(99, 99, 99)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -128,7 +134,7 @@ public class Interfaz extends javax.swing.JFrame {
 
          
     private void btnPausarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPausarActionPerformed
-        
+        clip.stop();
     }//GEN-LAST:event_btnPausarActionPerformed
 
     Lista lista = new Lista();
@@ -140,6 +146,19 @@ public class Interfaz extends javax.swing.JFrame {
       lista.pasarAnteriorCancion();
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
+    private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
+        clip.start();
+    }//GEN-LAST:event_btnPlayActionPerformed
+
+    
+    public void controlAudio(Cancion direccion)throws UnsupportedAudioFileException, IOException, LineUnavailableException{
+        File archivo = new File(direccion.getDireccion());
+        AudioInputStream audio = AudioSystem.getAudioInputStream(archivo);
+        clip = AudioSystem.getClip();
+        clip.open(audio);
+    }
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -181,6 +200,6 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JSlider btnSlider;
     private javax.swing.JComboBox<String> cbxCanciones;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel label;
     // End of variables declaration//GEN-END:variables
 }
